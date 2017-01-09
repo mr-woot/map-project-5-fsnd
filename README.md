@@ -33,7 +33,7 @@
 4. JavaScript
 
 ## Installation Instructions:
-### Initial Setup:
+### Initial Setup (If needed):
 1. Install Node and NPM using 
   ```curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -``` followed by
   ```sudo apt-get install -y nodejs```
@@ -42,6 +42,5 @@
 
 ### Project Setup
 1. ```git clone https://www.github.com/mr-woot/map-project-5-fsnd.git fsnd```.
-2. ```cd fsnd``` and run ```npm install```.
-3. Then run ```bower install```.
-4. Run ```gulp``` and open ```localhost:8000``` in your favourite browser (Mine is Chrome :P).
+2. ```cd fsnd```
+3. Run ```gulp``` and open ```localhost:8000``` in your favourite browser (Mine is Chrome :P).
