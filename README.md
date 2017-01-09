@@ -44,3 +44,5 @@
 1. ```git clone https://www.github.com/mr-woot/map-project-5-fsnd.git fsnd```.
 2. ```cd fsnd```
 3. Run ```gulp``` and open ```localhost:8000``` in your favourite browser (Mine is Chrome :P).
+
+### Note: (src, dest) => (app, temp) [Mapping]
