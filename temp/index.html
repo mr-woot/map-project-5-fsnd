@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Front End</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Lato:300" rel="stylesheet">
+    <!-- vendorInject:css -->
+    <!-- endinject -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- endinject -->
+</head>
+
+<body>
+    <!-- TEMPLATES START -->
+    <div class="mapWrapper">
+        <div class="search" id="search">
+            <input class="searchBar" id="searchBar" placeholder="Search here." data-bind="textInput: searchQuery, valueUpdate: 'afterkeydown'" />
+        </div>
+        <div class="app" id="app">
+            <div class="placeList" id="placeList">
+                <ul class="results" id="results" data-bind="foreach: filteredList">
+                    <li class="place" id="place" data-bind="text: name, click: bounce"></li>
+                </ul>
+            </div>
+            <div class="map" id="map">Error Loading GMaps</div>
+        </div>
+    </div>
+    <!-- TEMPLATES END -->
+
+    <!-- vendorInject:js -->
+    <script src="vendor/jquery.js"></script>
+    <script src="vendor/knockout.js"></script>
+    <!-- endinject -->
+    <!-- inject:js -->
+    <script src="app.js"></script>
+    <!-- endinject -->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqN6Yuq_-6PZjBYiToBM-1jA_UB5O3tUQ&callback=initMap" onerror="ifError()">
+    </script>
+
+</body>
+
+</html>
