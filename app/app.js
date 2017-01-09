@@ -53,10 +53,11 @@ var Location = function(data) {
 
     this.visible = ko.observable(true);
 
-    var foursquareurl = 'https://api.foursquare.com/v2/venues/search?ll=' + this.lat + ',' + this.long + '&client_id=' + clientId + '&client_secret=' + clientSecret + '&v=20160118' + '&query=' + this.name;
-
+    var foursquareurl = 'https://api.foursquare.com/v2/venues/search?ll=' + this.lat + ',' + this.long + '&client_id=' + clientId + '&client_secret=' + clientSecret + '&v=20170109' + '&query=' + this.name;
+    console.log(foursquareurl);
     $.getJSON(foursquareurl).done(function(data) {
         var results = data.response.venues[0];
+        console.log(results);
         that.url = results.url;
         if (typeof that.url === 'undefined') {
             that.url = "";
