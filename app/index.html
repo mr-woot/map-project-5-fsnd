@@ -16,26 +16,14 @@
 
 <body>
     <!-- TEMPLATES START -->
-    <div class="mapWrapper">
-        <div class="search" id="search">
-            <input class="searchBar" id="searchBar" placeholder="Search here." data-bind="textInput: searchQuery, valueUpdate: 'afterkeydown'" />
-        </div>
-        <div class="app" id="app">
-            <div class="placeList" id="placeList">
-                <ul class="results" id="results" data-bind="foreach: filteredList">
-                    <li class="place" id="place" data-bind="text: name, click: bounce"></li>
-                </ul>
-            </div>
-            <div class="map" id="map">Error Loading GMaps</div>
-        </div>
-    </div>
+    
     <!-- TEMPLATES END -->
 
     <!-- vendorInject:js -->
     <!-- endinject -->
     <!-- inject:js -->
     <!-- endinject -->
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqN6Yuq_-6PZjBYiToBM-1jA_UB5O3tUQ&callback=initMap" onerror="ifError()">
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqN6Yuq_-6PZjBYiToBM-1jA_UB5O3tUQ&callback=initMap">
     </script>
 
 </body>
