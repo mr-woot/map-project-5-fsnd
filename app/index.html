@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Front End</title>
     <!-- Fonts -->
+    <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Lato:300" rel="stylesheet">
     <!-- vendorInject:css -->
     <!-- endinject -->
@@ -16,7 +18,14 @@
 
 <body>
     <!-- TEMPLATES START -->
-    
+    <div class="searchBox">
+        <div class="searchContainer">
+            <label for="search"></label>
+            <input type="search" data-bind="text: place" id="search" placeholder="Search..." />
+            <!--<span class="icon"><i class="fa fa-search"></i></span>-->
+        </div>
+    </div>
+    <div id="map"></div>
     <!-- TEMPLATES END -->
 
     <!-- vendorInject:js -->
