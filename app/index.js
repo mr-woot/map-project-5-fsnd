@@ -1,3 +1,6 @@
+// Note: Somehow Google Street View API throws error on GET Request, maybe I used a lot while testing.
+// So, instead placed static url images.
+
 var map;
 var streetViewImage;
 var streetViewUrl = 'https://maps.googleapis.com/maps/api/streetview?size=180x90&location=';
@@ -134,7 +137,7 @@ function findStreetImage(loc) {
 }
 
 function populateMarkers(loc) {
-    var vm = this;
+    var self = this;
     var marker;
     for (i = 0; i < loc.length; i++) {
         loc[i].setMarker = new google.maps.Marker({
