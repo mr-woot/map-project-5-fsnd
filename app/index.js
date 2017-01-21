@@ -15,19 +15,26 @@ function autoComplete() {
             source: autocompleteSet,
             minLength: 0,
             select: function(e, ui) {
-                console.log(e);
-                console.log(ui.item.value);
+                // console.log(e);
+                // console.log(ui.item.value);
+                // var obj = new Object();
+                // for (var obje in initLocations) {
+                //     if (obje.name === ui.item.value) {
+                //         console.log("dsfsf " +  obje);
+                //         // Object.assign(obj, object);
+                //         break;
+                //     }
+                // }
+                // // console.log(obj);
+                // populateMarkers(obj);
             },
             change: function(e, ui) {
                 console.log("changed");
             }
-        })
-        .focus(function() {
-            // The following works only once.
-            // $(this).trigger('keydown.autocomplete');
-            // As suggested by digitalPBK, works multiple times
-            $(this).autocomplete("search");
         });
+        // .focus(function() {
+        //     $(this).autocomplete("search");
+        // });
 }
 
 function init() {
@@ -170,17 +177,6 @@ function populateMarkers(loc) {
                 }
                 infowindow.setContent(loc[i].infoWindowContent);
                 infowindow.open(map, this);
-            };
-        })(loc[i].setMarker, i));
-
-        var searchNav = $('#' + +i + +1);
-        searchNav.click((function(marker, i) {
-            return function() {
-                infowindow.setContent(loc[i].infoWindowContent);
-                infowindow.open(map, marker);
-                map.setZoom(16);
-                map.setCenter(marker.getPosition());
-                loc[i].pictest = true;
             };
         })(loc[i].setMarker, i));
     }
