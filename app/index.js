@@ -1,9 +1,6 @@
-// Note: Somehow Google Street View API throws error on GET Request, maybe I used a lot while testing.
-// So, instead placed static url images.
-
 var map;
 var streetViewImage;
-var streetViewUrl = 'https://maps.googleapis.com/maps/api/streetview?size=180x90&location=';
+var streetViewUrl = 'https://maps.googleapis.com/maps/api/streetview?size=150x150&location=';
 var autocompleteSet = [];
 
 function autoComplete() {
@@ -16,25 +13,15 @@ function autoComplete() {
             minLength: 0,
             select: function(e, ui) {
                 // console.log(e);
-                // console.log(ui.item.value);
-                // var obj = new Object();
-                // for (var obje in initLocations) {
-                //     if (obje.name === ui.item.value) {
-                //         console.log("dsfsf " +  obje);
-                //         // Object.assign(obj, object);
-                //         break;
-                //     }
-                // }
-                // // console.log(obj);
-                // populateMarkers(obj);
+                console.log(ui.item.value);
             },
             change: function(e, ui) {
                 console.log("changed");
             }
         });
-        // .focus(function() {
-        //     $(this).autocomplete("search");
-        // });
+    // .focus(function() {
+    //     $(this).autocomplete("search");
+    // });
 }
 
 function init() {
@@ -140,7 +127,8 @@ var initLocations = [{
 ];
 
 function findStreetImage(loc) {
-    streetViewImage = streetViewUrl + loc.lat + ',' + loc.lng + '&pitch=10';
+    streetViewImage = streetViewUrl + loc.lat + ',' + loc.lng + '&pitch=5&heading=34&key=AIzaSyDcCz7RhBVbe7WKJ9LN_DLqPd6BVN8kxko';
+
 }
 
 function populateMarkers(loc) {
@@ -157,7 +145,8 @@ function populateMarkers(loc) {
         findStreetImage(loc[i]);
 
         loc[i].infoWindowContent = '<div class="infoWindow">' + '<div class="content">' +
-            '<img src=' + loc[i].imgUrl + '></img>' +
+            // '<img src=' + loc[i].imgUrl + '></img>' +
+            '<img src=' + streetViewImage + '></img>' +
             '<a href="' + loc[i].mainUrl + '" target="_blank">Website</a>' +
             '<b>Address:</b> <div class="locAddress">' + loc[i].address + '</div></div></div>';
 
@@ -182,7 +171,7 @@ function populateMarkers(loc) {
     }
 }
 
-function ViewModel() {
+function MyView() {
     this.place = ko.observable("");
     this.initLocations = ko.computed(function() {
         var self = this;
@@ -200,5 +189,5 @@ function ViewModel() {
     }, this);
 };
 
-ko.applyBindings(new ViewModel);
+ko.applyBindings(new MyView);
 autoComplete();
