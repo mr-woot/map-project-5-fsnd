@@ -9,6 +9,7 @@ body {
     width: 100%;
 }
 
+
 /*.searchBox {
     padding-right: 24px;
     margin-right: 24px;
@@ -56,12 +57,24 @@ body {
     border-radius: 1px;
 }
 
-/*.searchContainer .icon {
-    position: absolute;
-    top: 50%;
-    margin-left: 15px;
-    margin-top: 27px;
-    z-index: 1;
-    color: #4f5b66;
-    cursor: pointer;
-}*/
+.infoWindow .content {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-content: center;
+    width: 200px;
+}
+
+.infoWindow > * {
+    text-align: center;
+}
+
+.infoWindow .content img {
+    margin: 0 auto;
+    height: 150px;
+    width: 150px;
+}
+
+.content {
+    margin: 10px 0;
+}

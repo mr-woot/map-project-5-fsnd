@@ -22,8 +22,8 @@
     <div class="searchBox">
         <div class="searchContainer">
             <label for="search"></label>
-            <input type="search" data-bind="text: place" id="search" placeholder="Search..." />
-            <!--<span class="icon"><i class="fa fa-search"></i></span>-->
+            <input type="input" id="search" data-bind="textInput: place" placeholder="Search... " />
+            <!--<span class="icon "><i class="fa fa-search "></i></span>-->
         </div>
     </div>
     <div id="map"></div>
@@ -35,9 +35,9 @@
     <script src="vendor/jquery-ui.js"></script>
     <!-- endinject -->
     <!-- inject:js -->
-    <script src="app.js"></script>
+    <script src="index.js"></script>
     <!-- endinject -->
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqN6Yuq_-6PZjBYiToBM-1jA_UB5O3tUQ&callback=initMap">
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqN6Yuq_-6PZjBYiToBM-1jA_UB5O3tUQ&callback=init">
     </script>
 
 </body>
