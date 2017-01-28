@@ -15,7 +15,7 @@
 var map,
     centerLoc = { lat: 28.7041, lng: 77.1025 },
     markers = [],
-    infoWindow = new google.maps.InfoWindow();
+    infoWindow;
 
 // initial locations array
 var initLocations = [{
@@ -71,7 +71,7 @@ var Location = function(data) {
     this.visibility = ko.observable(true);
 };
 
-var ViewModel = function() {
+function ViewModel() {
     var vm = this;
 
     // push into locationList from initLocations
@@ -79,6 +79,8 @@ var ViewModel = function() {
     initLocations.forEach(function(loc) {
         vm.locationsList.push(new Location(loc));
     });
+
+    infoWindow = new google.maps.InfoWindow();
 
     // centered map area
     map = new google.maps.Map(document.getElementById('map'), {
@@ -126,9 +128,9 @@ var ViewModel = function() {
                 }
                 infoWindowContent = '<div class="infoWindow">' + '<div class="content">' +
                     '<img src=' + streetViewImage + '></img>' +
-                    '<div class="locName">' + loc.name() + '</div>' +
-                    '<a href="' + loc.url + '" target="_blank">' + loc.url + '</a>' +
-                    '<b>Phone:</b> <div class="locPhone">' + loc.phone + '</div>' +
+                    '<div class="locName"><b>' + loc.name() + '</b></div>';
+                infoWindowContent += (loc.url === "URL doesn't exists.") ? '<b>' + loc.url + '</b>' : '<a href="' + loc.url + '" target="_blank">' + loc.url + '</a>';
+                infoWindowContent += '<b>Phone:</b> <div class="locPhone">' + loc.phone + '</div>' +
                     '<b>Address:</b> <div class="locAddress">' + loc.address + '</div></div></div>';
             })
             .fail(function(err) {
@@ -141,7 +143,7 @@ var ViewModel = function() {
                 marker.setAnimation(google.maps.Animation.BOUNCE);
                 setTimeout(function() {
                     marker.setAnimation(null);
-                }, 2000);
+                }, 2100);
             }
             infoWindow.setContent(infoWindowContent);
             infoWindow.open(map, marker);
@@ -176,6 +178,12 @@ var ViewModel = function() {
         infoWindow.close();
         google.maps.event.trigger(loc.marker, 'click');
     }
-};
+}
 
-ko.applyBindings(new ViewModel());
+function initMap() {
+    ko.applyBindings(new ViewModel());
+}
+
+function googleError() {
+    alert("Error fetching GMaps API.");
+}

@@ -29,8 +29,6 @@
     <div id="map"></div>
     <!-- TEMPLATES END -->
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcCz7RhBVbe7WKJ9LN_DLqPd6BVN8kxko">
-    </script>
     <!-- vendorInject:js -->
     <script src="vendor/jquery.js"></script>
     <script src="vendor/jquery-ui.js"></script>
@@ -39,6 +37,8 @@
     <!-- inject:js -->
     <script src="index.js"></script>
     <!-- endinject -->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcCz7RhBVbe7WKJ9LN_DLqPd6BVN8kxko&callback=initMap" onerror="googleError()">
+    </script>
 </body>
 
 </html>
