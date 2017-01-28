@@ -15,6 +15,7 @@
 var map,
     centerLoc = { lat: 28.7041, lng: 77.1025 },
     markers = [],
+    marker,
     infoWindow;
 
 // initial locations array
@@ -69,6 +70,13 @@ var Location = function(data) {
     this.phone = ko.observable(data.phone);
     this.url = ko.observable(data.url);
     this.visibility = ko.observable(true);
+    // set markers with animation DROP
+    this.marker = new google.maps.Marker({
+        map: map,
+        position: { lat: this.lat, lng: this.lng },
+        title: this.name(),
+        animation: google.maps.Animation.DROP
+    });
 };
 
 function ViewModel() {
@@ -89,15 +97,8 @@ function ViewModel() {
     });
 
     vm.locationsList().forEach(function(loc) {
-        // set markers with animation DROP
-        var marker = new google.maps.Marker({
-            map: map,
-            position: { lat: loc.lat, lng: loc.lng },
-            title: loc.name(),
-            animation: google.maps.Animation.DROP
-        });
-        markers.push(marker);
-        loc.marker = marker;
+
+        markers.push(loc.marker);
 
         // street view api fetch
         var streetViewImage = 'https://maps.googleapis.com/maps/api/streetview?size=200x150&location=' + loc.lat + ',' + loc.lng;
@@ -137,16 +138,16 @@ function ViewModel() {
                 alert("Error fetching location info.");
             });
         loc.marker.addListener('click', function() {
-            if (marker.getAnimation() !== null) {
-                marker.setAnimation(null);
+            if (loc.marker.getAnimation() !== null) {
+                loc.marker.setAnimation(null);
             } else {
-                marker.setAnimation(google.maps.Animation.BOUNCE);
+                loc.marker.setAnimation(google.maps.Animation.BOUNCE);
                 setTimeout(function() {
-                    marker.setAnimation(null);
+                    loc.marker.setAnimation(null);
                 }, 2100);
             }
             infoWindow.setContent(infoWindowContent);
-            infoWindow.open(map, marker);
+            infoWindow.open(map, loc.marker);
 
         });
     });
