@@ -1,3 +1,16 @@
+/**************************************************
+
+ **Coded By: Tushar Mudgal (aka mr-woot: @github)**
+
+ **************************************************/
+
+// References: 
+// 1. Info Window:    http://stackoverflow.com/questions/18333679/google-maps-open-info-window-after-click-on-a-link
+// 2. Adding Markers: http://stackoverflow.com/questions/15531390/adding-array-of-markers-in-google-map
+// 3. List Search:    http://stackoverflow.com/questions/29551997/knockout-search-filter
+// 4. Set Map Logic:  http://stackoverflow.com/questions/39674990/google-maps-clear-all-markers-before-placing-new-one
+// 5. And ofcourse Google Maps.
+
 // initMap globals
 var map,
     centerLoc = { lat: 28.7041, lng: 77.1025 },
