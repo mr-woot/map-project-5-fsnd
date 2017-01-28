@@ -128,11 +128,12 @@ function ViewModel() {
                     loc.phone = res.contact.formattedPhone;
                 }
                 infoWindowContent = '<div class="infoWindow">' + '<div class="content">' +
-                    '<img src=' + streetViewImage + '></img>' +
+                    '<img src=' + streetViewImage + ' alt="Street View Image"></img>' +
                     '<div class="locName"><b>' + loc.name() + '</b></div>';
                 infoWindowContent += (loc.url === "URL doesn't exists.") ? '<b>' + loc.url + '</b>' : '<a href="' + loc.url + '" target="_blank">' + loc.url + '</a>';
                 infoWindowContent += '<b>Phone:</b> <div class="locPhone">' + loc.phone + '</div>' +
-                    '<b>Address:</b> <div class="locAddress">' + loc.address + '</div></div></div>';
+                    '<b>Address:</b> <div class="locAddress">' + loc.address + '</div>'+
+                    '<div><b>Sources: </b>Google Street View, Foursquare</div></div></div>';
             })
             .fail(function(err) {
                 alert("Error fetching location info.");
@@ -163,6 +164,9 @@ function ViewModel() {
             });
         } else {
             vm.locationsList().forEach(function(loc) {
+                var match = loc.name().toLowerCase().indexOf(query) >= 0;
+                loc.visibility(match);
+                loc.marker.setVisible(match);
                 if (loc.name().toLowerCase().indexOf(query) >= 0) {
                     loc.visibility(true);
                     loc.marker.setMap(map);
