@@ -63,8 +63,8 @@ var clientSecret = "HOFIWYGUB2YIYBFRN42S0KMZVVRYVR1KPVDZSGXAZUMZECUX";
 // location model
 var Location = function(data) {
     this.name = ko.observable(data.name);
-    this.lat = ko.observable(data.lat);
-    this.lng = ko.observable(data.lng);
+    this.lat = data.lat;
+    this.lng = data.lng;
     this.address = ko.observable(data.address);
     this.phone = ko.observable(data.phone);
     this.url = ko.observable(data.url);
@@ -92,7 +92,7 @@ function ViewModel() {
         // set markers with animation DROP
         var marker = new google.maps.Marker({
             map: map,
-            position: { lat: loc.lat(), lng: loc.lng() },
+            position: { lat: loc.lat, lng: loc.lng },
             title: loc.name(),
             animation: google.maps.Animation.DROP
         });
@@ -100,10 +100,10 @@ function ViewModel() {
         loc.marker = marker;
 
         // street view api fetch
-        var streetViewImage = 'https://maps.googleapis.com/maps/api/streetview?size=200x150&location=' + loc.lat() + ',' + loc.lng();
+        var streetViewImage = 'https://maps.googleapis.com/maps/api/streetview?size=200x150&location=' + loc.lat + ',' + loc.lng;
 
         // foursquare api fetch
-        var url = "https://api.foursquare.com/v2/venues/search?v=20161016&ll=" + loc.lat() + "%2C%20" + loc.lng() + "&query=" + loc.name() + "&client_id=E2404DIZ15BU5UXSLE2OKXFMD3UTFLGNNMYJ2BKCSZ4HHHIA&client_secret=HOFIWYGUB2YIYBFRN42S0KMZVVRYVR1KPVDZSGXAZUMZECUX";
+        var url = "https://api.foursquare.com/v2/venues/search?v=20161016&ll=" + loc.lat + "%2C%20" + loc.lng + "&query=" + loc.name() + "&client_id=E2404DIZ15BU5UXSLE2OKXFMD3UTFLGNNMYJ2BKCSZ4HHHIA&client_secret=HOFIWYGUB2YIYBFRN42S0KMZVVRYVR1KPVDZSGXAZUMZECUX";
         var res;
         var infoWindowContent;
         $.getJSON(url, function(data) {
