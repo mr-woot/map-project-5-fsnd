@@ -119,7 +119,7 @@ var ViewModel = function() {
                     '<b>Address:</b> <div class="locAddress">' + loc.address + '</div></div></div>';
             })
             .fail(function(err) {
-                console.log(err);
+                alert("Error fetching location info.");
             });
         loc.marker.addListener('click', function() {
             if (marker.getAnimation() !== null) {
@@ -136,8 +136,6 @@ var ViewModel = function() {
         });
     });
 
-    // this.currentLocation = ko.observable(this.locationsList()[0]);
-
     // filter search query
     this.query = ko.observable("");
     this.filterResults = ko.computed(function() {
@@ -149,7 +147,7 @@ var ViewModel = function() {
             });
         } else {
             vm.locationsList().forEach(function(loc) {
-                if (loc.name().toLowerCase().indexOf(query) !== -1) {
+                if (loc.name().toLowerCase().indexOf(query) >= 0) {
                     loc.visibility(true);
                     loc.marker.setMap(map);
                 } else {
