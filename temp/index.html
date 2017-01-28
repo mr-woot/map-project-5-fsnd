@@ -7,8 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Front End</title>
     <!-- Fonts -->
-    <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Lato:300" rel="stylesheet">
     <!-- vendorInject:css -->
     <!-- endinject -->
@@ -22,24 +20,25 @@
     <div class="searchBox">
         <div class="searchContainer">
             <label for="search"></label>
-            <input type="input" id="search" data-bind="textInput: place" placeholder="Search... " />
-            <!--<span class="icon "><i class="fa fa-search "></i></span>-->
+            <input type="input" id="search" data-bind="textInput: query" placeholder="Search... " />
+            <ul class="list" data-bind="foreach: locationsList">
+                <li data-bind="text: name, click: $parent.clickInfoContent, visible: visibility"></li>
+            </ul>
         </div>
     </div>
     <div id="map"></div>
     <!-- TEMPLATES END -->
 
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcCz7RhBVbe7WKJ9LN_DLqPd6BVN8kxko">
+    </script>
     <!-- vendorInject:js -->
     <script src="vendor/jquery.js"></script>
-    <script src="vendor/knockout.js"></script>
     <script src="vendor/jquery-ui.js"></script>
+    <script src="vendor/knockout.js"></script>
     <!-- endinject -->
     <!-- inject:js -->
     <script src="index.js"></script>
     <!-- endinject -->
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqN6Yuq_-6PZjBYiToBM-1jA_UB5O3tUQ&callback=init">
-    </script>
-
 </body>
 
 </html>

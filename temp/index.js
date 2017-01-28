@@ -1,193 +1,170 @@
-var map;
-var streetViewImage;
-var streetViewUrl = 'https://maps.googleapis.com/maps/api/streetview?size=150x150&location=';
-var autocompleteSet = [];
+// initMap globals
+var map,
+    centerLoc = { lat: 28.7041, lng: 77.1025 },
+    markers = [],
+    infoWindow = new google.maps.InfoWindow();
 
-function autoComplete() {
-    for (var i = 0; i < initLocations.length; i++) {
-        autocompleteSet[i] = initLocations[i].name;
-    }
-    $('#search')
-        .autocomplete({
-            source: autocompleteSet,
-            minLength: 0,
-            select: function(e, ui) {
-                // console.log(e);
-                console.log(ui.item.value);
-            },
-            change: function(e, ui) {
-                console.log("changed");
-            }
-        });
-    // .focus(function() {
-    //     $(this).autocomplete("search");
-    // });
-}
-
-function init() {
-    var mapOptions = {
-        zoom: 4,
-        center: new google.maps.LatLng(23.363, 86.22)
-    };
-
-    map = new google.maps.Map(document.getElementById('map'), mapOptions);
-
-    populateMarkers(initLocations);
-
-    setMarkersMap();
-}
-
-function setMarkersMap() {
-    for (var i = 0; i < initLocations.length; i++) {
-        if (initLocations[i].test === true) {
-            initLocations[i].setMarker.setMap(map);
-        } else {
-            initLocations[i].setMarker.setMap(null);
-        }
-    }
-}
-
+// initial locations array
 var initLocations = [{
-        id: 1,
         name: "Taj Mahal",
         lat: 27.1750151,
         lng: 78.0421552,
-        visible: ko.observable(true),
-        test: true,
-        address: "Near Agra Fort (Fatehabad Road), Āgra 282001",
-        mainUrl: "http://www.tajmahal.gov.in",
-        imgUrl: "https://traveljee.com/wp-content/uploads/2013/10/taj_mahal_latest_photo.jpg"
     },
     {
-        id: 2,
         name: "Red Fort",
         lat: 28.6561592,
         lng: 77.2410203,
-        visible: ko.observable(true),
-        test: true,
-        address: "Mahatma Gandhi Marg, New Delhi 110006",
-        mainUrl: "Not Available",
-        imgUrl: "http://www.transindiatravels.com/wp-content/uploads/red-fort1.jpg"
     },
     {
-        id: 3,
         name: "Lotus Temple",
         lat: 28.553492,
         lng: 77.2588264,
-        visible: ko.observable(true),
-        test: true,
-        address: "Bahapur, Kalkaji, New Delhi 110019",
-        mainUrl: "http://www.bahaihouseofworship.in",
-        imgUrl: "http://2.bp.blogspot.com/-JYQ8x3mIAq4/UdRNXZb3rtI/AAAAAAAAATs/VpGaowkM4cw/s1600/Lotus-Temple-front+view.jpg"
     },
     {
-        id: 4,
         name: "Chhitorgarh Fort",
         lat: 24.8870028,
         lng: 74.6447289,
-        visible: ko.observable(true),
-        test: true,
-        address: "Fort Road, Chitrakot, Chhitorgarh, India",
-        mainUrl: "Not Available",
-        imgUrl: "http://today-freshnews.com/wp-content/uploads/2015/08/today-freshnews-latest-news-hot-news-daily-news-breaking-news.1aws.jpg"
     },
     {
-        id: 5,
         name: "Gateway of India",
         lat: 18.9219841,
         lng: 72.8346543,
-        visible: ko.observable(true),
-        test: true,
-        address: "Apollo Bandar, Off P J Ramchandani Marg (near the Taj Mahal Palace & Tower), Mumbai 400001",
-        mainUrl: "Not Available",
-        imgUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Gateway_of_India_02.JPG/240px-Gateway_of_India_02.JPG"
     },
     {
-        id: 6,
         name: "Rameshwaram Temple",
         lat: 9.28820115,
         lng: 79.31734085,
-        visible: ko.observable(true),
-        test: true,
-        address: "Rameshwaram, Tamil Nadu",
-        mainUrl: "Not Available",
-        imgUrl: "http://www.enticingtour.com/wp-content/uploads/2013/09/Brahadeshwara-Temple.jpg"
     },
     {
-        id: 7,
         name: "Golden Temple",
         lat: 31.6199803,
         lng: 74.8764849,
-        visible: ko.observable(true),
-        test: true,
-        address: "Golden Temple Rd (Nr Jallianwala Bagh), Amritsar 143001",
-        mainUrl: "http://sgpc.net/golden-temple/index.asp",
-        imgUrl: "http://famouswonders.com/wp-content/uploads/2009/03/golden-temple.jpg"
     }
 ];
 
-function findStreetImage(loc) {
-    streetViewImage = streetViewUrl + loc.lat + ',' + loc.lng + '&pitch=5&heading=34&key=AIzaSyDcCz7RhBVbe7WKJ9LN_DLqPd6BVN8kxko';
+// foursquare secrets
+// Note: where can this credentials be stored while moving this app to production.
+var clientId = "E2404DIZ15BU5UXSLE2OKXFMD3UTFLGNNMYJ2BKCSZ4HHHIA";
+var clientSecret = "HOFIWYGUB2YIYBFRN42S0KMZVVRYVR1KPVDZSGXAZUMZECUX";
 
-}
-
-function populateMarkers(loc) {
-    var self = this;
-    var marker;
-    for (i = 0; i < loc.length; i++) {
-        loc[i].setMarker = new google.maps.Marker({
-            position: new google.maps.LatLng(loc[i].lat, loc[i].lng),
-            map: map,
-            animation: google.maps.Animation.DROP,
-            name: loc[i].name
-        });
-
-        findStreetImage(loc[i]);
-
-        loc[i].infoWindowContent = '<div class="infoWindow">' + '<div class="content">' +
-            // '<img src=' + loc[i].imgUrl + '></img>' +
-            '<img src=' + streetViewImage + '></img>' +
-            '<a href="' + loc[i].mainUrl + '" target="_blank">Website</a>' +
-            '<b>Address:</b> <div class="locAddress">' + loc[i].address + '</div></div></div>';
-
-        var infowindow = new google.maps.InfoWindow({
-            content: loc[i].infoWindowContent
-        });
-
-        new google.maps.event.addListener(loc[i].setMarker, 'click', (function(marker, i) {
-            return function() {
-                if (marker.getAnimation() !== null) {
-                    marker.setAnimation(null);
-                } else {
-                    marker.setAnimation(google.maps.Animation.BOUNCE);
-                    setTimeout(function() {
-                        marker.setAnimation(null);
-                    }, 5000);
-                }
-                infowindow.setContent(loc[i].infoWindowContent);
-                infowindow.open(map, this);
-            };
-        })(loc[i].setMarker, i));
-    }
-}
-
-function MyView() {
-    this.place = ko.observable("");
-    this.initLocations = ko.computed(function() {
-        var self = this;
-        var search = self.place().toLowerCase();
-        return ko.utils.arrayFilter(initLocations, function(marker) {
-            if (marker.name.toLowerCase().indexOf(search) >= 0) {
-                marker.test = true;
-                return marker.visible(true);
-            } else {
-                marker.test = false;
-                setMarkersMap();
-                return marker.visible(false);
-            }
-        });
-    }, this);
+// location model
+var Location = function(data) {
+    this.name = ko.observable(data.name);
+    this.lat = ko.observable(data.lat);
+    this.lng = ko.observable(data.lng);
+    this.address = ko.observable(data.address);
+    this.phone = ko.observable(data.phone);
+    this.url = ko.observable(data.url);
+    this.visibility = ko.observable(true);
 };
 
-ko.applyBindings(new MyView);
-autoComplete();
+var ViewModel = function() {
+    var vm = this;
+
+    // push into locationList from initLocations
+    this.locationsList = ko.observableArray([]);
+    initLocations.forEach(function(loc) {
+        vm.locationsList.push(new Location(loc));
+    });
+
+    // centered map area
+    map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 4,
+        center: centerLoc
+    });
+
+    vm.locationsList().forEach(function(loc) {
+        // set markers with animation DROP
+        var marker = new google.maps.Marker({
+            map: map,
+            position: { lat: loc.lat(), lng: loc.lng() },
+            title: loc.name(),
+            animation: google.maps.Animation.DROP
+        });
+        markers.push(marker);
+        loc.marker = marker;
+
+        // street view api fetch
+        var streetViewImage = 'https://maps.googleapis.com/maps/api/streetview?size=200x150&location=' + loc.lat() + ',' + loc.lng();
+
+        // foursquare api fetch
+        var url = "https://api.foursquare.com/v2/venues/search?v=20161016&ll=" + loc.lat() + "%2C%20" + loc.lng() + "&query=" + loc.name() + "&client_id=E2404DIZ15BU5UXSLE2OKXFMD3UTFLGNNMYJ2BKCSZ4HHHIA&client_secret=HOFIWYGUB2YIYBFRN42S0KMZVVRYVR1KPVDZSGXAZUMZECUX";
+        var res;
+        var infoWindowContent;
+        $.getJSON(url, function(data) {
+                res = data.response.venues[0];
+                // console.log(data);
+            })
+            .done(function() {
+                if (res.location.formattedAddress === undefined || res.location.formattedAddress === "") {
+                    loc.address = "Address not available.";
+                } else {
+                    loc.address = res.location.formattedAddress[0] + ", " + res.location.formattedAddress[1] + ", " + res.location.formattedAddress[2];
+                }
+                if (res.url === undefined || res.url === "") {
+                    loc.url = "URL doesn't exists.";
+                } else {
+                    loc.url = res.url;
+                }
+                if (res.contact.formattedPhone === undefined || res.contact.formattedPhone === "") {
+                    loc.phone = "Contact Phone not available.";
+                } else {
+                    loc.phone = res.contact.formattedPhone;
+                }
+                infoWindowContent = '<div class="infoWindow">' + '<div class="content">' +
+                    '<img src=' + streetViewImage + '></img>' +
+                    '<div class="locName">' + loc.name() + '</div>' +
+                    '<a href="' + loc.url + '" target="_blank">' + loc.url + '</a>' +
+                    '<b>Phone:</b> <div class="locPhone">' + loc.phone + '</div>' +
+                    '<b>Address:</b> <div class="locAddress">' + loc.address + '</div></div></div>';
+            })
+            .fail(function(err) {
+                console.log(err);
+            });
+        loc.marker.addListener('click', function() {
+            if (marker.getAnimation() !== null) {
+                marker.setAnimation(null);
+            } else {
+                marker.setAnimation(google.maps.Animation.BOUNCE);
+                setTimeout(function() {
+                    marker.setAnimation(null);
+                }, 2000);
+            }
+            infoWindow.setContent(infoWindowContent);
+            infoWindow.open(map, marker);
+
+        });
+    });
+
+    // this.currentLocation = ko.observable(this.locationsList()[0]);
+
+    // filter search query
+    this.query = ko.observable("");
+    this.filterResults = ko.computed(function() {
+        var query = vm.query().toLowerCase();
+        if (!search) {
+            vm.locationsList().forEach(function(loc) {
+                loc.visibility(true);
+                loc.marker.setMap(map);
+            });
+        } else {
+            vm.locationsList().forEach(function(loc) {
+                if (loc.name().toLowerCase().indexOf(query) !== -1) {
+                    loc.visibility(true);
+                    loc.marker.setMap(map);
+                } else {
+                    loc.visibility(false);
+                    loc.marker.setMap(null);
+                }
+            });
+        }
+    }, this);
+
+    // opens info window when clicked
+    this.clickInfoContent = function(loc) {
+        infoWindow.close();
+        google.maps.event.trigger(loc.marker, 'click');
+    }
+};
+
+ko.applyBindings(new ViewModel());
